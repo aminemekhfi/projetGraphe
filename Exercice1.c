@@ -2,7 +2,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void test()
+//------------------------------------------- Question 2 : -----------------------------------------;
+
+Noeud* creerNoeud(int valeur)
 {
-	printf("test1\n");
+	Noeud* nouveauNoeud=(Noeud*)malloc(sizeof(Noeud));
+	nouveauNoeud->donnee=valeur;
+	nouveauNoeud->suivant=NULL;
+	return nouveauNoeud;
+}
+
+Graphe* insertionGraphe(Graphe* graphe, int sommeGrapheEntree)
+{
+	if(graphe==NULL)
+	{
+		graphe=(Graphe*)malloc(sizeof(Graphe));
+		graphe->sommeGraphe=sommeGrapheEntree;
+		graphe->tableauListe=(listAdjacent*)malloc(sommeGrapheEntree*sizeof(listAdjacent));
+	}
+	// Noeud* nouveauNoeud = creerNoeud(valeur);
+	
 }
