@@ -1,9 +1,11 @@
 #include "Exercice1.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <stdbool.h>
+
 
 //------------------------------------------- Question 2 : -----------------------------------------;
-
 Noeud* creerNoeud(int valeur)
 {
 	Noeud* nouveauNoeud=(Noeud*)malloc(sizeof(Noeud));
@@ -12,14 +14,109 @@ Noeud* creerNoeud(int valeur)
 	return nouveauNoeud;
 }
 
-Graphe* insertionGraphe(Graphe* graphe, int sommeGrapheEntree)
+arrete* ajouterArrete(Graphe* graphe, Noeud* sommet1, Noeud* sommet2)
 {
-	if(graphe==NULL)
-	{
-		graphe=(Graphe*)malloc(sizeof(Graphe));
-		graphe->sommeGraphe=sommeGrapheEntree;
-		graphe->tableauListe=(listAdjacent*)malloc(sommeGrapheEntree*sizeof(listAdjacent));
-	}
-	// Noeud* nouveauNoeud = creerNoeud(valeur);
-	
+    if(sommet1==sommet2)
+    {
+        return NULL;
+    }
+    arrete* nouvelleArrete = (arrete*)malloc(sizeof(arrete));
+    nouvelleArrete->noeud1 = sommet1;
+    nouvelleArrete->noeud2 = sommet2;	
+    nouvelleArrete->suivant = NULL;
+
+    if (graphe->listeArretes == NULL) {
+        graphe->listeArretes = nouvelleArrete;
+    } else {
+        arrete* tempArrete = graphe->listeArretes;
+        while (tempArrete->suivant != NULL) {
+            tempArrete = tempArrete->suivant;
+        }
+        tempArrete->suivant = nouvelleArrete;
+    }
+    return nouvelleArrete;
 }
+
+Graphe* insertionGraphe(Graphe* graphe, int valeur)
+{
+	//graphe n'existe pas
+    if (graphe == NULL) {
+        graphe = (Graphe*)malloc(sizeof(Graphe));
+        graphe->listeSommets = NULL;
+        graphe->listeArretes = NULL;
+        graphe->nombreSommets = 0;
+    }
+
+    //Creaction sommet
+    Noeud* nouveauNoeud = creerNoeud(valeur);
+
+    //graphe vide
+    if (graphe->listeSommets == NULL) {
+        graphe->listeSommets = nouveauNoeud;
+    } else {
+        Noeud* temp = graphe->listeSommets;
+        while (temp->suivant != NULL) {
+            temp = temp->suivant;
+        }
+        temp->suivant = nouveauNoeud;
+    }
+
+    graphe->nombreSommets++; 
+
+    //Arrete si se n'est pas le premier noeud
+    if (graphe->nombreSommets > 1) {
+		int indexAleatoire = rand() % graphe->nombreSommets;
+        Noeud* temp = graphe->listeSommets;
+		for (int i = 0; i < indexAleatoire; i++) {
+            temp = temp->suivant;
+        }
+        ajouterArrete(graphe, nouveauNoeud, temp);
+    }
+	//Si c'est le premier noeud, on ne peut pas ajouter d'arrete	
+    return graphe;
+}
+
+//Fonction pour afficher le graphe
+
+void afficherGraphe(Graphe* graphe)
+{
+	Noeud* temp = graphe->listeSommets;
+	arrete* tempArrete = graphe->listeArretes;
+	while (temp != NULL) {
+		printf("%d\n", temp->donnee);
+		temp = temp->suivant;
+	}
+	while (tempArrete != NULL) {
+		printf("Arrete : %d - %d\n", tempArrete->noeud1->donnee, tempArrete->noeud2->donnee);
+		tempArrete = tempArrete->suivant;
+	}
+}
+
+int sommetExiste(Graphe* graphe, int valeur) {
+    Noeud* temp = graphe->listeSommets;
+    while (temp != NULL) {
+        if (temp->donnee == valeur) {
+            return 1; 
+        }
+        temp = temp->suivant;
+    }
+    return 0; 
+}
+
+
+void intialiserGraphe(Graphe* graphe, int nombreSommets) {
+    srand(time(NULL));
+    int valeurRandom = 0;
+
+    for (int i = 0; i < nombreSommets; i++) {
+        do {
+            valeurRandom = rand() % 10; 
+        } while (sommetExiste(graphe, valeurRandom)==1); 
+
+        graphe = insertionGraphe(graphe, valeurRandom);
+    }
+}
+
+
+
+
