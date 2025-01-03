@@ -118,7 +118,7 @@ void afficherGraphe(Graphe* graphe)
     int i = 1;
 	while (tempArrete != NULL) {
         
-		printf("Arrete %d : %d - %d\n", i, tempArrete->noeud1->donnee, tempArrete->noeud2->donnee);
+		printf("Arrete %d : %d -> %d\n", i, tempArrete->noeud1->donnee, tempArrete->noeud2->donnee);
 		tempArrete = tempArrete->suivant;
         i++;
 	}
