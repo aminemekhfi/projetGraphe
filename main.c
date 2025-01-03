@@ -7,7 +7,7 @@
 int main()
 {
 	// Graphe* monGraphe1 = (Graphe*)malloc(sizeof(Graphe));
-	Graphe* monGraphe2 = (Graphe*)malloc(sizeof(Graphe));
+	
 	// monGraphe1 = insertionGraphe(monGraphe1, 1);
 	// monGraphe1 = insertionGraphe(monGraphe1, 2);
 	// monGraphe1 = insertionGraphe(monGraphe1, 3);
@@ -16,7 +16,12 @@ int main()
 	// monGraphe1 = insertionGraphe(monGraphe1, 6);
 	// monGraphe1 = insertionGraphe(monGraphe1, 7);
 	// printf("test avant intialisation\n");
-	intialiserGraphe(monGraphe2, 5);
+	Graphe* monGraphe2 = (Graphe*)malloc(sizeof(Graphe));
+	intialiserGraphe(monGraphe2, 4);
+	insertionGraphe(monGraphe2, 99);
 	afficherGraphe(monGraphe2);
+	// supprimerGraphe(monGraphe2);
+	// afficherGraphe(monGraphe2);
+	//Après la suppression, le graphe n'existe pas, donc il n'ya rien à afficher comme si le graphe n'éxitait pas
 	return 0;
 }

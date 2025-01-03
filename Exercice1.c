@@ -14,6 +14,19 @@ Noeud* creerNoeud(int valeur)
 	return nouveauNoeud;
 }
 
+int tailleGraphe(Graphe* graphe)
+{
+    Noeud* temp=graphe->listeSommets;
+    int tailleGraphe=0;
+    while(temp!=NULL)
+    {
+        tailleGraphe++;
+        temp=temp->suivant;
+    }
+    return tailleGraphe;
+}
+
+
 arrete* ajouterArrete(Graphe* graphe, Noeud* sommet1, Noeud* sommet2)
 {
     if(sommet1==sommet2)
@@ -63,15 +76,26 @@ Graphe* insertionGraphe(Graphe* graphe, int valeur)
 
     graphe->nombreSommets++; 
 
-    //Arrete si se n'est pas le premier noeud
-    if (graphe->nombreSommets > 1) {
-		int indexAleatoire = rand() % graphe->nombreSommets;
-        Noeud* temp = graphe->listeSommets;
-		for (int i = 0; i < indexAleatoire; i++) {
-            temp = temp->suivant;
+
+    if(graphe->nombreSommets>1)
+    {
+        Noeud* precedant=graphe->listeSommets;
+        while(precedant->suivant!=nouveauNoeud)
+        {
+            precedant=precedant->suivant;
         }
-        ajouterArrete(graphe, nouveauNoeud, temp);
+        ajouterArrete(graphe, precedant, nouveauNoeud);
     }
+    
+    //Arrete si se n'est pas le premier noeud
+    // if (graphe->nombreSommets > 1) {
+	// 	int indexAleatoire = rand() % graphe->nombreSommets;
+    //     Noeud* temp = graphe->listeSommets;
+	// 	for (int i = 0; i < indexAleatoire; i++) {
+    //         temp = temp->suivant;
+    //     }
+    //     ajouterArrete(graphe, nouveauNoeud, temp);
+    // }
 	//Si c'est le premier noeud, on ne peut pas ajouter d'arrete	
     return graphe;
 }
@@ -80,15 +104,23 @@ Graphe* insertionGraphe(Graphe* graphe, int valeur)
 
 void afficherGraphe(Graphe* graphe)
 {
+    if(graphe==NULL)
+    {
+        printf("Graphe vide\n");
+        return;
+    }
 	Noeud* temp = graphe->listeSommets;
 	arrete* tempArrete = graphe->listeArretes;
 	while (temp != NULL) {
 		printf("%d\n", temp->donnee);
 		temp = temp->suivant;
 	}
+    int i = 1;
 	while (tempArrete != NULL) {
-		printf("Arrete : %d - %d\n", tempArrete->noeud1->donnee, tempArrete->noeud2->donnee);
+        
+		printf("Arrete %d : %d - %d\n", i, tempArrete->noeud1->donnee, tempArrete->noeud2->donnee);
 		tempArrete = tempArrete->suivant;
+        i++;
 	}
 }
 
@@ -103,7 +135,6 @@ int sommetExiste(Graphe* graphe, int valeur) {
     return 0; 
 }
 
-
 void intialiserGraphe(Graphe* graphe, int nombreSommets) {
     srand(time(NULL));
     int valeurRandom = 0;
@@ -116,6 +147,26 @@ void intialiserGraphe(Graphe* graphe, int nombreSommets) {
         graphe = insertionGraphe(graphe, valeurRandom);
     }
 }
+
+void supprimerGraphe(Graphe* graphe)
+{
+    Noeud* temp = graphe->listeSommets;
+    Noeud* temp2 = graphe->listeSommets;
+    while (temp != NULL) {
+        temp2 = temp->suivant;
+        free(temp);
+        temp = temp2;
+    }
+    arrete* tempArrete = graphe->listeArretes;
+    arrete* tempArrete2 = graphe->listeArretes;
+    while (tempArrete != NULL) {
+        tempArrete2 = tempArrete->suivant;
+        free(tempArrete);
+        tempArrete = tempArrete2;
+    }
+    free(graphe);
+}
+
 
 
 

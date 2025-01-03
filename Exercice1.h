@@ -1,5 +1,6 @@
 #ifndef EXERCIC1_H
 #define EXERCIC1_H
+
 //------------------------------------------- Question 1 : -----------------------------------------;
 //	Structure d'un Noeud:
 
@@ -38,6 +39,10 @@ void afficherGraphe(Graphe* graphe);
 void intialiserGraphe(Graphe* graphe, int nombreSommets);
 
 int sommetExiste(Graphe* graphe, int valeur);
+
+int tailleGraphe(Graphe* graphe);
+
+void supprimerGraphe(Graphe* graphe);
 
 
 
