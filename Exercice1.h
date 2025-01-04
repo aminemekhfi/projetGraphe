@@ -46,6 +46,7 @@ void supprimerGraphe(Graphe* graphe);
 
 
 ///Partie 2
+estCircuit(chemin, nbsommet);
 bool estComplet(Graphe* graphe);
 
 

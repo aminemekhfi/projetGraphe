@@ -170,6 +170,36 @@ void supprimerGraphe(Graphe* graphe)
 
 //////Partie2
 
+////Q1
+bool estCircuit(Noeud* chemin[], int nbsommet) {
+    if (nbsommet < 2) {  // Un circuit nécessite au moins 2 sommets
+        return false;
+    } else {
+        if (chemin[0] == chemin[nbsommet - 1]) {     // Vérifie si le premier et le dernier sommet sont identiques
+            return true; // C'est un circuit
+        } else {
+            return false; // Pas un circuit
+        }
+    }
+}
+
+//////////
+//int main() {
+    // Exemple de chemin
+ //   Noeud* chemin[] = {noeud1, noeud2, noeud3, noeud4};
+//    int nbsommet = 4; // Nombre de sommets dans le chemin
+
+    // Vérifier si c'est un circuit
+  //  if (estCircuit(chemin, nbsommet)) {
+  //      printf("C'est un circuit.\n");
+ //   } else {
+ //       printf("Ce n'est pas un circuit.\n");
+ //   }
+
+ //   return 0;
+//}
+/////////
+
 ///Q3
 bool estComplet(Graphe* graphe) {
     int nombreDeSommets = graphe->nombreSommets;
