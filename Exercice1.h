@@ -49,7 +49,11 @@ void parcoursGrapheLargeur(Graphe* graphe, Noeud* sommet);
 
 
 ///Partie 2
-bool estCircuit(chemin, nbsommet);
+//Q1
+bool contientCircuit(Graphe* graphe);
+bool estCircuit(Noeud* chemin[], int nbsommet);
+bool dfsDetecterCircuit(Noeud* noeud, Noeud* ndprece, bool visites[], Graphe* graphe);
+//Q3
 bool estComplet(Graphe* graphe);
 
 

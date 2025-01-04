@@ -189,13 +189,17 @@ void supprimerGraphe(Graphe* graphe)
 
 void parcoursGrapheLargeur(Graphe* graphe, Noeud* sommet)
 {
-    
+
 }
 
 
-//////Partie2
+//------------------------------------------- Question 2 : -----------------------------------------;
 
-////Q1
+
+
+
+//------------------------------------------- Q1 : -----------------------------------------;
+
 bool estCircuit(Noeud* chemin[], int nbsommet) {
     if (nbsommet < 2) {  // Un circuit nécessite au moins 2 sommets
         return false;
@@ -207,6 +211,62 @@ bool estCircuit(Noeud* chemin[], int nbsommet) {
         }
     }
 }
+// Fonction pour détecter un circuit dans un graphe
+bool dfsDetecterCircuit(Noeud* noeud, Noeud* ndprece, bool visites[], Graphe* graphe) {
+    // Marquer le nœud actuel comme visité
+    visites[noeud->donnee] = true;
+    // Parcourir toutes les arêtes du graphe
+    Arrete* arreteCourante = graphe->listeArretes;
+    while (arreteCourante != NULL) {
+        // Vérifier si l'arête concerne le nœud actuel
+        if (arreteCourante->noeud1 == noeud || arreteCourante->noeud2 == noeud) {
+            // Trouver le voisin du nœud actuel
+Noeud* voisin;
+if (arreteCourante->noeud1 == noeud) {
+    voisin = arreteCourante->noeud2;
+} else {
+    voisin = arreteCourante->noeud1;
+}
+            // Si le voisin est le noued precedent on l'ignore
+            if (voisin == ndprece) {
+                arreteCourante = arreteCourante->suivant;
+                continue;
+            }
+            // Si le voisin a déjà été visité, il y a un circuit
+            if (visites[voisin->donnee]) {
+                return true;
+            }
+            // Sinon, on passe au voisin
+            if (dfsDetecterCircuit(voisin, noeud, visites, graphe)) {
+                return true;
+            }
+        }
+        arreteCourante = arreteCourante->suivant;
+    }
+    return false; // Pas de circuit détecté
+}
+
+// Fonction pour vérifier si le graphe contient un circuit
+bool contientCircuit(Graphe* graphe) {
+    if (graphe == NULL || graphe->listeSommets == NULL) {
+        return false; // Graphe vide, pas de circuit
+    }
+    // Tableau pour marquer les nœuds visités
+    bool visites[100] = {false};
+    // Parcourir tous les nœuds du graphe
+    Noeud* noeudCourant = graphe->listeSommets;
+    while (noeudCourant != NULL) {
+        if (!visites[noeudCourant->donnee]) {
+            if (dfsDetecterCircuit(noeudCourant, NULL, visites, graphe)) {
+                return true; // Circuit détecté
+            }
+        }
+        noeudCourant = noeudCourant->suivant;
+    }
+    return false; // Pas de circuit détecté
+}
+
+
 
 //////////
 //int main() {
@@ -220,12 +280,17 @@ bool estCircuit(Noeud* chemin[], int nbsommet) {
  //   } else {
  //       printf("Ce n'est pas un circuit.\n");
  //   }
+  // if (contientCircuit(monGraphe)) {
+  //      printf("Le graphe contient un circuit.\n");
+  //  } else {
+ //       printf("Le graphe ne contient pas de circuit.\n");
+ //   }
 
  //   return 0;
 //}
 /////////
 
-///Q3
+//------------------------------------------- Q3 : -----------------------------------------;
 bool estComplet(Graphe* graphe) {
     int nombreDeSommets = graphe->nombreSommets;
     int nombreAretesAttendues = nombreDeSommets * (nombreDeSommets - 1) / 2;
