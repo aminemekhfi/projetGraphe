@@ -293,18 +293,32 @@ bool contientCircuit(Graphe* graphe) {
 //------------------------------------------- Q3 : -----------------------------------------;
 bool estComplet(Graphe* graphe) {
     int nombreDeSommets = graphe->nombreSommets;
-    int nombreAretesAttendues = nombreDeSommets * (nombreDeSommets - 1) / 2;
-    int nombreAretesActuelles = 0;
-    arrete* arêteCourante = graphe->listeArretes;
-    while (arêteCourante != NULL) {      // Parcourir toutes les arêtes du graphe
-        nombreAretesActuelles++;
-        arêteCourante = arêteCourante->suivant;
+
+    // Parcourir chaque sommet
+    Noeud* sommetCourant = graphe->listeSommets;
+    while (sommetCourant != NULL) {
+        int degre = 0;
+
+        // Parcourir toutes les arêtes pour compter le degré du sommet courant
+        arrete* arêteCourante = graphe->listeArretes;
+        while (arêteCourante != NULL) {
+            // Vérifier si l'arête est incidente au sommet courant
+            if (arêteCourante->noeud1 == sommetCourant || arêteCourante->noeud2 == sommetCourant) {
+                degre++;
+            }
+            arêteCourante = arêteCourante->suivant;
+        }
+
+        // Si un sommet n'a pas un degré de (n-1), le graphe n'est pas complet
+        if (degre != nombreDeSommets - 1) {
+            return false;
+        }
+
+        // Passer au sommet suivant
+        sommetCourant = sommetCourant->suivant;
     }
-    if (nombreAretesActuelles == nombreAretesAttendues) {
-        return true; //Graphe complet
-    } else {
-        return false;
-    }
+
+    return true; // Tous les sommets ont un degré de (n-1), le graphe est complet
 }
 
 
