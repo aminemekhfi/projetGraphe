@@ -45,6 +45,10 @@ int tailleGraphe(Graphe* graphe);
 void supprimerGraphe(Graphe* graphe);
 
 
+///Partie 2
+bool estComplet(Graphe* graphe)
+
+
 
 
 #endif
