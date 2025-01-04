@@ -31,6 +31,7 @@ typedef struct Graphe {
 
 Noeud* creerNoeud(int valeur);
 arrete* ajouterArrete(Graphe* graphe, Noeud* sommet1, Noeud* sommet2);
+arrete* ajouterArreteParValeur(Graphe* graphe, int sommet1, int sommet2);
 Graphe* insertionGraphe(Graphe* graphe, int valeur);
 
 //Fonction pour afficher le graphe
@@ -43,6 +44,8 @@ int sommetExiste(Graphe* graphe, int valeur);
 int tailleGraphe(Graphe* graphe);
 
 void supprimerGraphe(Graphe* graphe);
+
+void parcoursGrapheLargeur(Graphe* graphe, Noeud* sommet);
 
 
 

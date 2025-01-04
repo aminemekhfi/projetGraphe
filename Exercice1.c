@@ -29,10 +29,11 @@ int tailleGraphe(Graphe* graphe)
 
 arrete* ajouterArrete(Graphe* graphe, Noeud* sommet1, Noeud* sommet2)
 {
-    if(sommet1==sommet2)
-    {
-        return NULL;
-    }
+    //Le code en commentaire est pour empecher de creer une arrete entre un sommet et lui meme
+    // if(sommet1==sommet2)
+    // {
+    //     return NULL;
+    // }
     arrete* nouvelleArrete = (arrete*)malloc(sizeof(arrete));
     nouvelleArrete->noeud1 = sommet1;
     nouvelleArrete->noeud2 = sommet2;	
@@ -48,6 +49,25 @@ arrete* ajouterArrete(Graphe* graphe, Noeud* sommet1, Noeud* sommet2)
         tempArrete->suivant = nouvelleArrete;
     }
     return nouvelleArrete;
+}
+
+arrete* ajouterArreteParValeur(Graphe* graphe, int sommet1, int sommet2)
+{
+    Noeud* temp1 = graphe->listeSommets;
+    Noeud* temp2 = graphe->listeSommets;
+    while (temp1 != NULL) {
+        if (temp1->donnee == sommet1) {
+            break;
+        }
+        temp1 = temp1->suivant;
+    }
+    while (temp2 != NULL) {
+        if (temp2->donnee == sommet2) {
+            break;
+        }
+        temp2 = temp2->suivant;
+    }
+    return ajouterArrete(graphe, temp1, temp2);
 }
 
 Graphe* insertionGraphe(Graphe* graphe, int valeur)
@@ -165,6 +185,11 @@ void supprimerGraphe(Graphe* graphe)
         tempArrete = tempArrete2;
     }
     free(graphe);
+}
+
+void parcoursGrapheLargeur(Graphe* graphe, Noeud* sommet)
+{
+    
 }
 
 
