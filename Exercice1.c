@@ -36,7 +36,7 @@ arrete* ajouterArrete(Graphe* graphe, Noeud* sommet1, Noeud* sommet2)
     // }
     arrete* nouvelleArrete = (arrete*)malloc(sizeof(arrete));
     nouvelleArrete->noeud1 = sommet1;
-    nouvelleArrete->noeud2 = sommet2;	
+    nouvelleArrete->noeud2 = sommet2;
     nouvelleArrete->suivant = NULL;
 
     if (graphe->listeArretes == NULL) {
@@ -94,7 +94,7 @@ Graphe* insertionGraphe(Graphe* graphe, int valeur)
         temp->suivant = nouveauNoeud;
     }
 
-    graphe->nombreSommets++; 
+    graphe->nombreSommets++;
 
 
     if(graphe->nombreSommets>1)
@@ -106,7 +106,7 @@ Graphe* insertionGraphe(Graphe* graphe, int valeur)
         }
         ajouterArrete(graphe, precedant, nouveauNoeud);
     }
-    
+
     //Arrete si se n'est pas le premier noeud
     // if (graphe->nombreSommets > 1) {
 	// 	int indexAleatoire = rand() % graphe->nombreSommets;
@@ -116,7 +116,7 @@ Graphe* insertionGraphe(Graphe* graphe, int valeur)
     //     }
     //     ajouterArrete(graphe, nouveauNoeud, temp);
     // }
-	//Si c'est le premier noeud, on ne peut pas ajouter d'arrete	
+	//Si c'est le premier noeud, on ne peut pas ajouter d'arrete
     return graphe;
 }
 
@@ -137,7 +137,7 @@ void afficherGraphe(Graphe* graphe)
 	}
     int i = 1;
 	while (tempArrete != NULL) {
-        
+
 		printf("Arrete %d : %d -> %d\n", i, tempArrete->noeud1->donnee, tempArrete->noeud2->donnee);
 		tempArrete = tempArrete->suivant;
         i++;
@@ -148,11 +148,11 @@ int sommetExiste(Graphe* graphe, int valeur) {
     Noeud* temp = graphe->listeSommets;
     while (temp != NULL) {
         if (temp->donnee == valeur) {
-            return 1; 
+            return 1;
         }
         temp = temp->suivant;
     }
-    return 0; 
+    return 0;
 }
 
 void intialiserGraphe(Graphe* graphe, int nombreSommets) {
@@ -161,8 +161,8 @@ void intialiserGraphe(Graphe* graphe, int nombreSommets) {
 
     for (int i = 0; i < nombreSommets; i++) {
         do {
-            valeurRandom = rand() % 10; 
-        } while (sommetExiste(graphe, valeurRandom)==1); 
+            valeurRandom = rand() % 10;
+        } while (sommetExiste(graphe, valeurRandom)==1);
 
         graphe = insertionGraphe(graphe, valeurRandom);
     }
@@ -193,6 +193,54 @@ void parcoursGrapheLargeur(Graphe* graphe, Noeud* sommet)
 }
 
 
+//////Partie2
+
+////Q1
+bool estCircuit(Noeud* chemin[], int nbsommet) {
+    if (nbsommet < 2) {  // Un circuit nécessite au moins 2 sommets
+        return false;
+    } else {
+        if (chemin[0] == chemin[nbsommet - 1]) {     // Vérifie si le premier et le dernier sommet sont identiques
+            return true; // C'est un circuit
+        } else {
+            return false; // Pas un circuit
+        }
+    }
+}
+
+//////////
+//int main() {
+    // Exemple de chemin
+ //   Noeud* chemin[] = {noeud1, noeud2, noeud3, noeud4};
+//    int nbsommet = 4; // Nombre de sommets dans le chemin
+
+    // Vérifier si c'est un circuit
+  //  if (estCircuit(chemin, nbsommet)) {
+  //      printf("C'est un circuit.\n");
+ //   } else {
+ //       printf("Ce n'est pas un circuit.\n");
+ //   }
+
+ //   return 0;
+//}
+/////////
+
+///Q3
+bool estComplet(Graphe* graphe) {
+    int nombreDeSommets = graphe->nombreSommets;
+    int nombreAretesAttendues = nombreDeSommets * (nombreDeSommets - 1) / 2;
+    int nombreAretesActuelles = 0;
+    arrete* arêteCourante = graphe->listeArretes;
+    while (arêteCourante != NULL) {      // Parcourir toutes les arêtes du graphe
+        nombreAretesActuelles++;
+        arêteCourante = arêteCourante->suivant;
+    }
+    if (nombreAretesActuelles == nombreAretesAttendues) {
+        return true; //Graphe complet
+    } else {
+        return false;
+    }
+}
 
 
 

@@ -48,6 +48,11 @@ void supprimerGraphe(Graphe* graphe);
 void parcoursGrapheLargeur(Graphe* graphe, Noeud* sommet);
 
 
+///Partie 2
+bool estCircuit(chemin, nbsommet);
+bool estComplet(Graphe* graphe);
+
+
 
 
 #endif
