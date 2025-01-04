@@ -46,7 +46,7 @@ void supprimerGraphe(Graphe* graphe);
 
 
 ///Partie 2
-bool estComplet(Graphe* graphe)
+bool estComplet(Graphe* graphe);
 
 
 
